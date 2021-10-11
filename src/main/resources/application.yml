@@ -1,0 +1,58 @@
+#应用配置
+server:
+  port: 8008
+spring:
+  application:
+    name: Quartz
+  datasource:
+    username: root
+    password: 12345678
+    url: jdbc:mysql://localhost:3306/Quartz?useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# spring的datasource等配置未贴出
+  quartz:
+    # 将任务等保存化到数据库
+    job-store-type: jdbc
+    # 程序结束时会等待quartz相关的内容结束
+    wait-for-jobs-to-complete-on-shutdown: true
+    # QuartzScheduler启动时更新己存在的Job,这样就不用每次修改targetObject后删除qrtz_job_details表对应记录
+    overwrite-existing-jobs: true
+    # 这里居然是个map，搞得智能提示都没有，佛了
+    properties:
+      org:
+        quartz:
+          # scheduler相关
+          scheduler:
+            # scheduler的实例名
+            instanceName: scheduler
+            instanceId: AUTO
+          # 持久化相关
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            # 表示数据库中相关表是QRTZ_开头的
+            tablePrefix: QRTZ_
+            useProperties: false
+          # 线程池相关
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            # 线程数
+            threadCount: 10
+            # 线程优先级
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+
+#Apollo 配置
+app:
+  id: apollo-test                            #应用ID
+apollo:
+  cacheDir: /opt/data/                       #配置本地配置缓存目录
+  cluster: default                           #指定使用哪个集群的配置
+  meta: http://127.0.0.1:8080                #DEV环境配置中心地址
+  autoUpdateInjectedSpringProperties: true   #是否开启 Spring 参数自动更新
+  bootstrap:
+    enabled: true                            #是否开启 Apollo
+    namespaces: application                  #设置 Namespace
+    eagerLoad:
+      enabled: false                         #将 Apollo 加载提到初始化日志系统之前
+
