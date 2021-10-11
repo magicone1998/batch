@@ -35,6 +35,7 @@ public class CompareListener implements ApplicationListener<ContextClosedEvent> 
                     .build();
             scheduler.scheduleJob(jobDetail, trigger);
             scheduler.start();
+            
         }
     }
 }
