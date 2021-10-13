@@ -9,6 +9,7 @@ spring:
     password: 12345678
     url: jdbc:mysql://localhost:3306/Quartz?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.cj.jdbc.Driver
+    
 # spring的datasource等配置未贴出
   quartz:
     # 将任务等保存化到数据库
@@ -55,4 +56,16 @@ apollo:
     namespaces: application                  #设置 Namespace
     eagerLoad:
       enabled: false                         #将 Apollo 加载提到初始化日志系统之前
+
+logging:
+  level:
+    root: debug
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#mybatis:
+  #configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
